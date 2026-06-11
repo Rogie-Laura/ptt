@@ -20,6 +20,10 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "ptt-server" });
 });
 
+app.get("/", (_req, res) => {
+  res.json({ ok: true, service: "ptt-server", message: "PTT server is running" });
+});
+
 interface RoomState {
   floorHolder: string | null;
   users: Map<string, { name: string }>;
