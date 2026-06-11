@@ -3,9 +3,6 @@ services:
     name: ptt-server
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: NODE_ENV=production npm start
     healthCheckPath: /health
-    envVars:
-      - key: NODE_ENV
-        value: production

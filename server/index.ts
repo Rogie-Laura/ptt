@@ -1,5 +1,6 @@
 import express from "express";
 import { createServer } from "http";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
@@ -133,10 +134,12 @@ io.on("connection", (socket) => {
 
 if (isProd) {
   const dist = path.join(__dirname, "../dist");
-  app.use(express.static(dist));
-  app.get("/{*splat}", (_req, res) => {
-    res.sendFile(path.join(dist, "index.html"));
-  });
+  if (fs.existsSync(dist)) {
+    app.use(express.static(dist));
+    app.get("/{*splat}", (_req, res) => {
+      res.sendFile(path.join(dist, "index.html"));
+    });
+  }
 }
 
 httpServer.listen(PORT, "0.0.0.0", () => {
